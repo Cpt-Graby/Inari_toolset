@@ -2,38 +2,56 @@ import os
 import tkinter as tk
 from tkinter import filedialog as fd
 
-# -----------Setting Inital windows -----
 
 class Inari_app(tk.Frame):
-    def __init__(self, master):
-        self.master = master
-        self.master.columnconfigure(0, weight=1)
-        self.master.rowconfigure(0, weight=1)
-        self.master.title("Inari - Manipulateur de sgf facile")
-        self.content=tk.Frame__init(self, master)
-        self.content.grid(column=0, row=0, sticky=("n","s","e","w"))
-        self.content.columnconfigure(0, weight=3)
-        self.content.columnconfigure(1, weight=3)
-        self.content.columnconfigure(2, weight=3)
-        self.content.columnconfigure(3, weight=1)
-        self.content.columnconfigure(4, weight=1)
-        self.content.rowconfigure(1, weight=1)
-        pass
-    
-    def config_choose_directory_frame(self):
-        """Setting up the choose directory frame and gui"""
-        self.ini_frame = tk.Frame(self.content, bd=5)
-        self.select_dir = tk.Button(self.ini_frame, text='Select directory',command=calldir)
-        self.path = tk.StringVar()
-        self.show_res = tk.Label(self.ini_frame, textvariable = path )
+
+    def __init__(self, root):
+        self.root=root
+        self.root.title("Inari - Manipulateur de sgf facile")
+        self.root.geometry("300x250")
+        mainframe = tk.Frame(root, bg = "red")
+        mainframe.grid(column =0, row=0,sticky=("N", "W", "E", "S"))
+        self.config_choose_directory_frame(mainframe)
         #Griding
-        self.ini_frame.grid(column=0, row=0, columnspan=4, rowspan=3,sticky=("n","e","w"))
-        self.select_dir.grid(column=0, row=1, padx=5)
-        self.show_res.grid(column=0, row=2)
-        
+        mainframe.columnconfigure(0, weight=1)
+        mainframe.rowconfigure(0, weight=2)
+        self.root.columnconfigure(0, weight=1)
+        self.root.rowconfigure(0, weight=1)
+
+
+
+    def config_choose_directory_frame(self, mainframe):
+        """
+
+        """
+        self.ini_frame = tk.Frame(mainframe, bd = 10, bg="green")
+        self.select_dir = tk.Button(self.ini_frame, text='Select directory',
+                                        command= lambda: calldir(self))
+        self.path = tk.StringVar()
+        self.show_res = tk.Label(self.ini_frame, textvariable = self.path)
+        self.listfile = tk.Listbox(self.ini_frame)
+
+
+        self.ini_frame.grid(column =0, row=0,sticky=("N", "W", "E",))
+        self.ini_frame.columnconfigure(0, weight =1)
+        self.ini_frame.rowconfigure(0, weight =2)
+        self.select_dir.grid(column=0, row=0)
+        self.show_res.grid(column=0, row=1)
+        self.listfile.grid(column=2, row=0, columnspan=2, rowspan=2,sticky=("n","s","e") )
         pass
-    
-    def config_choose_directory_frame(self):
+
+
+    def calldir():
+        """This fuction will ask the directory where the app must work"""
+        self.path.set(fd.askdirectory())
+        # print(self.path)
+        for file in os.listdir(path.get()):
+            self.listfile.insert(tk.END, file)
+            print(file)
+        pass
+
+"""
+    def config_choose_frame_frame(self):
         self.manip_frame = tk.Frame(self.content, bd=5)
         # Entry widget for the new word
         self.new_word_label = tk.Label(self.manip_frame, text="New word")
@@ -50,7 +68,7 @@ class Inari_app(tk.Frame):
         # Flag for the button replace word
         task_change_word = tk.StringVar()
         task_flag_change_word = tk.Label(self.manip_frame, textvariable = task_change_word )
-        
+
         #Griding
         self.manip_frame.grid(column=0, row=3, columnspan=4, rowspan=3, sticky=("s","e","w"))
         self.new_word_label.grid(column=0, row=3)
@@ -61,15 +79,18 @@ class Inari_app(tk.Frame):
         self.task_flag_change_word.grid(column=6, row=4, columnspan=2)
 
         pass
-    
 
+"""
 # -------- All the function will be here -----------
-def calldir():
-    """This fuction will ask the directory where the app must work"""
+    def calldir():
+        """This fuction will ask the directory where the app must work"""
+        self.path.set(fd.askdirectory())
+        # print(self.path)
+        for file in os.listdir(path.get()):
+            self.listfile.insert(tk.END, file)
+            print(file)
 
-    path.set(fd.askdirectory())
-
-def replace_word():
+    def replace_word():
     """This function will replace the given word with the new word"""
     new_word = entry_new_word.get()
     old_word = entry_old_word.get()
@@ -88,4 +109,3 @@ if __name__ == '__main__':
    root = tk.Tk()
    main_app =  Inari_app(root)
    root.mainloop()
-
