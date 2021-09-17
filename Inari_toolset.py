@@ -3,13 +3,65 @@ import tkinter as tk
 from tkinter import filedialog as fd
 
 # -----------Setting Inital windows -----
-app = tk.Tk()
-app.title("Inari - Manipulateur de sgf facile")
 
-content = tk.Frame(app)
-ini_frame = tk.Frame(content, bd=5)
-manip_frame = tk.Frame(content, bd=5)
+class Inari_app(tk.Frame):
+    def __init__(self, master):
+        self.master = master
+        self.master.columnconfigure(0, weight=1)
+        self.master.rowconfigure(0, weight=1)
+        self.master.title("Inari - Manipulateur de sgf facile")
+        self.content=tk.Frame__init(self, master)
+        self.content.grid(column=0, row=0, sticky=("n","s","e","w"))
+        self.content.columnconfigure(0, weight=3)
+        self.content.columnconfigure(1, weight=3)
+        self.content.columnconfigure(2, weight=3)
+        self.content.columnconfigure(3, weight=1)
+        self.content.columnconfigure(4, weight=1)
+        self.content.rowconfigure(1, weight=1)
+        pass
+    
+    def config_choose_directory_frame(self):
+        """Setting up the choose directory frame and gui"""
+        self.ini_frame = tk.Frame(self.content, bd=5)
+        self.select_dir = tk.Button(self.ini_frame, text='Select directory',command=calldir)
+        self.path = tk.StringVar()
+        self.show_res = tk.Label(self.ini_frame, textvariable = path )
+        #Griding
+        self.ini_frame.grid(column=0, row=0, columnspan=4, rowspan=3,sticky=("n","e","w"))
+        self.select_dir.grid(column=0, row=1, padx=5)
+        self.show_res.grid(column=0, row=2)
+        
+        pass
+    
+    def config_choose_directory_frame(self):
+        self.manip_frame = tk.Frame(self.content, bd=5)
+        # Entry widget for the new word
+        self.new_word_label = tk.Label(self.manip_frame, text="New word")
+        self.new_word = tk.StringVar()
+        self.entry_new_word = tk.Entry(manip_frame, textvariable = new_word)
 
+        # Entry widget for the old word
+        self.old_word_label = tk.Label(self.manip_frame, text="Old word")
+        self.old_word = tk.StringVar()
+        self.entry_old_word = tk.Entry(self.manip_frame, textvariable = old_word)
+
+        self.replace_term = tk.Button(self.manip_frame, text='Change Term: ',command=replace_word)
+
+        # Flag for the button replace word
+        task_change_word = tk.StringVar()
+        task_flag_change_word = tk.Label(self.manip_frame, textvariable = task_change_word )
+        
+        #Griding
+        self.manip_frame.grid(column=0, row=3, columnspan=4, rowspan=3, sticky=("s","e","w"))
+        self.new_word_label.grid(column=0, row=3)
+        self.entry_new_word.grid(column=0, row=4)
+        self.old_word_label.grid(column=1, row=3)
+        self.entry_old_word.grid(column=1, row=4)
+        self.replace_term.grid(column=3, row=4, columnspan=2)
+        self.task_flag_change_word.grid(column=6, row=4, columnspan=2)
+
+        pass
+    
 
 # -------- All the function will be here -----------
 def calldir():
@@ -32,54 +84,8 @@ def replace_word():
     #sgf_string = sgf_string.replace(new_word, old_word)
 
 
-# --------- Different Frame -------------
+if __name__ == '__main__':
+   root = tk.Tk()
+   main_app =  Inari_app(root)
+   root.mainloop()
 
-select_dir = tk.Button(ini_frame, text='Select directory',command=calldir)
-path = tk.StringVar()
-show_res = tk.Label(ini_frame, textvariable = path )
-
-
-# Entry widget for the new word
-new_word_label = tk.Label(manip_frame, text="New word")
-new_word = tk.StringVar()
-entry_new_word = tk.Entry(manip_frame, textvariable = new_word)
-
-# Entry widget for the old word
-old_word_label = tk.Label(manip_frame, text="Old word")
-old_word = tk.StringVar()
-entry_old_word = tk.Entry(manip_frame, textvariable = old_word)
-
-replace_term = tk.Button(manip_frame, text='Change Term: ',command=replace_word)
-
-# Flag for the button replace word
-task_change_word = tk.StringVar()
-task_flag_change_word = tk.Label(manip_frame, textvariable = task_change_word )
-
-# ---------------------Gridding ----------------
-
-content.grid(column=0, row=0, sticky=("n","s","e","w"))
-
-# -- ini_frame-----
-ini_frame.grid(column=0, row=0, columnspan=4, rowspan=3,sticky=("n","e","w"))
-select_dir.grid(column=0, row=1, padx=5)
-show_res.grid(column=0, row=2)
-
-# -- Manip_frame------
-manip_frame.grid(column=0, row=3, columnspan=4, rowspan=3, sticky=("s","e","w"))
-new_word_label.grid(column=0, row=3)
-entry_new_word.grid(column=0, row=4)
-old_word_label.grid(column=1, row=3)
-entry_old_word.grid(column=1, row=4)
-replace_term.grid(column=3, row=4, columnspan=2)
-task_flag_change_word.grid(column=6, row=4, columnspan=2)
-
-app.columnconfigure(0, weight=1)
-app.rowconfigure(0, weight=1)
-content.columnconfigure(0, weight=3)
-content.columnconfigure(1, weight=3)
-content.columnconfigure(2, weight=3)
-content.columnconfigure(3, weight=1)
-content.columnconfigure(4, weight=1)
-content.rowconfigure(1, weight=1)
-
-app.mainloop()
