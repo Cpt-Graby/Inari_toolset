@@ -6,7 +6,11 @@ V1:
 
 Versions futur: 
   * Travailler sur un sgf unique
-  -> Applatir une position de partie pour en faire un tsumego
-  -> Séparer un arbre de tsumego en plusieurs Tsumego
+  
+      ->  Applatir une position de partie pour en faire un tsumego
+      
+      
+       -> Séparer un arbre de tsumego en plusieurs Tsumego
   * Options sur dossiers
-  -> Renommer des ensembles de fichers
+  
+       -> Renommer des ensembles de fichers
